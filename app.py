@@ -1,3 +1,4 @@
+from ast import Continue
 from email import message
 import os
 from os.path import join, dirname
@@ -125,7 +126,9 @@ def findJadwalAll(line_id):
 def parse(fileName):
     file = fileName+".pdf"
     try:
+        
         tables = camelot.read_pdf(file, pages="all")
+        print(tables[0].df)
         tableHead = ["No","Kode", "Mata Kuliah"]
         for no in range(3):
             print(tables[0].df[no][0])
@@ -167,7 +170,12 @@ def parse(fileName):
                 obj['Paket Semester'] = int(tables[page].df[3][i])
                 obj['SKS'] = int(tables[page].df[4][i])
                 obj['Pengajar'] = tables[page].df[5][i]
+
+                if (tables[page].df[6][i] == ""):
+                    arr.append(obj)
+                    continue
                 jadwal = tables[page].df[6][i].split(" ")
+                
                 jam = jadwal[1].split("-")
                 obj['Begin'] = jam[0]
                 obj['End'] = jam[1]
@@ -183,7 +191,7 @@ def parse(fileName):
         print(arr)
         return arr
     except:
-        return "NO"
+        return "error"
     
 
     
