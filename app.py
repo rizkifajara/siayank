@@ -172,6 +172,11 @@ def parse(fileName):
                 obj['Pengajar'] = tables[page].df[5][i]
 
                 if (tables[page].df[6][i] == ""):
+                    obj['Begin']=""
+                    obj['End']=""
+                    obj['Place']=""
+                    obj['Day']=""
+                    obj['Jadwal']=""
                     arr.append(obj)
                     continue
                 jadwal = tables[page].df[6][i].split(" ")
